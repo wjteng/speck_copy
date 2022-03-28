@@ -318,7 +318,7 @@ def real_differences_data(n, nr, diff=(0x0040,0)):
   #generate labels
   Y = np.frombuffer(urandom(n), dtype=np.uint8); Y = Y & 1;
   #generate keys
-  keys = np.frombuffer(urandom(8*n),dtype=np.uint16).reshape(4,-1);
+  keys = np.frombuffer(urandom(10*n),dtype=np.uint16).reshape(5,-1);
   #generate plaintexts
   plain0l = np.frombuffer(urandom(2*n),dtype=np.uint16);
   plain0r = np.frombuffer(urandom(2*n),dtype=np.uint16);
