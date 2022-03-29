@@ -65,8 +65,8 @@ def enc_one_round(p,k):
     #r_p = r;
    
     #Left Shift   
-    #r_7 = rol(r,7);
-    r_7 = r * 1;
+    r_7 = rol(r,7);
+    #r_7 = r * 1;
 
     #Substitution
     r_s = substitute (r_7,S);
@@ -94,8 +94,8 @@ def dec_one_round(c,k):
     #l_p = l;
    
     #Left Shift   
-    #l_7 = rol(l_p,7);
-    l_7 = l_p*1;
+    l_7 = rol(l_p,7);
+    #l_7 = l_p*1;
 
     #Substitution
     l_s = substitute (l_7,S);
