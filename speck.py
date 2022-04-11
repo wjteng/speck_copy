@@ -27,8 +27,9 @@ def ror(x,k):
 def enc_one_round(p, k):
     c0, c1 = p[0], p[1];
     c0 = ror(c0, ALPHA());
-    c0 = (c0 + c1) & MASK_VAL;
     c0 = c0 ^ k;
+    c0 = (c0 + c1) & MASK_VAL;
+    #c0 = c0 ^ k;
     c1 = rol(c1, BETA());
     c1 = c1 ^ c0;
     return(c0,c1);
