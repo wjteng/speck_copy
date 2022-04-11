@@ -75,7 +75,7 @@ def enc_one_round(p,k):
 
     #Modular Addition
     #l= (l^r_s^k);
-    l = (l^r_2);
+    l = (l^r_s);
 
     #P1
     r = permute(l,P1);
