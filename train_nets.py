@@ -1,4 +1,4 @@
-import lbciot as cipher
+import speck as cipher
 
 import numpy as np
 
