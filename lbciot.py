@@ -67,12 +67,15 @@ def enc_one_round(p,k):
     #Left Shift   
     r_7 = rol(r,7);
     #r_7 = r * 1;
-
+    
+    r_7 = (r_7^k);
+    
     #Substitution
     r_s = substitute (r_7,S);
 
     #Modular Addition
-    l= (l^r_s^k);
+    #l= (l^r_s^k);
+    l = (l^r_2);
 
     #P1
     r = permute(l,P1);
