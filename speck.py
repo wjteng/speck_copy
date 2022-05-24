@@ -146,7 +146,7 @@ def real_differences_data(n, nr, diff=(0x0040,0)):
   ks = expand_key(keys, nr);
     
   keys2 = np.frombuffer(urandom(8*n),dtype=np.uint16).reshape(4,-1);  
-  ks2 = expand_key(keys, nr);  
+  ks2 = expand_key(keys2, nr);  
     
   ctdata0l, ctdata0r = encrypt((plain0l, plain0r), ks,ks2);
   ctdata1l, ctdata1r = encrypt((plain1l, plain1r), ks,ks2);
