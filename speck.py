@@ -35,6 +35,15 @@ def enc_one_round(p, k,k2):
     c1 = c1 ^ c0;
     return(c0,c1);
 
+def enc_one_round_key(p, k):
+    c0, c1 = p[0], p[1];
+    c0 = ror(c0, ALPHA());
+    c0 = (c0 + c1) & MASK_VAL;
+    c0 = c0 ^ k;
+    c1 = rol(c1, BETA());
+    c1 = c1 ^ c0;
+    return(c0,c1);
+
 def dec_one_round(c,k):
     c0, c1 = c[0], c[1];
     c1 = c1 ^ c0;
@@ -49,7 +58,7 @@ def expand_key(k, t):
     ks[0] = k[len(k)-1];
     l = list(reversed(k[:len(k)-1]));
     for i in range(t-1):
-        l[i%3], ks[i+1] = enc_one_round((l[i%3], ks[i]), i);
+        l[i%3], ks[i+1] = enc_one_round_key((l[i%3], ks[i]), i);
     return(ks);
 
 def encrypt(p, ks,ks2):
