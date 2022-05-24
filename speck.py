@@ -24,11 +24,13 @@ def rol(x,k):
 def ror(x,k):
     return((x >> k) | ((x << (WORD_SIZE() - k)) & MASK_VAL));
 
-def enc_one_round(p, k):
+def enc_one_round(p, k,k2):
     c0, c1 = p[0], p[1];
     c0 = ror(c0, ALPHA());
-    c0 = (c0 + c1) & MASK_VAL;
     c0 = c0 ^ k;
+    c1 = c1 ^ k2;
+    c0 = (c0 + c1) & MASK_VAL;
+    #c0 = c0 ^ k;
     c1 = rol(c1, BETA());
     c1 = c1 ^ c0;
     return(c0,c1);
@@ -50,10 +52,12 @@ def expand_key(k, t):
         l[i%3], ks[i+1] = enc_one_round((l[i%3], ks[i]), i);
     return(ks);
 
-def encrypt(p, ks):
+def encrypt(p, ks,ks2):
     x, y = p[0], p[1];
+    i = 0;
     for k in ks:
-        x,y = enc_one_round((x,y), k);
+        x,y = enc_one_round((x,y), k,ks2[i]);
+        i = i+1;
     return(x, y);
 
 def decrypt(c, ks):
@@ -140,8 +144,12 @@ def real_differences_data(n, nr, diff=(0x0040,0)):
   num_rand_samples = np.sum(Y==0);
   #expand keys and encrypt
   ks = expand_key(keys, nr);
-  ctdata0l, ctdata0r = encrypt((plain0l, plain0r), ks);
-  ctdata1l, ctdata1r = encrypt((plain1l, plain1r), ks);
+    
+  keys2 = np.frombuffer(urandom(8*n),dtype=np.uint16).reshape(4,-1);  
+  ks2 = expand_key(keys, nr);  
+    
+  ctdata0l, ctdata0r = encrypt((plain0l, plain0r), ks,ks2);
+  ctdata1l, ctdata1r = encrypt((plain1l, plain1r), ks,ks2);
   #generate blinding values
   k0 = np.frombuffer(urandom(2*num_rand_samples),dtype=np.uint16);
   k1 = np.frombuffer(urandom(2*num_rand_samples),dtype=np.uint16);
